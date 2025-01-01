@@ -60,13 +60,6 @@ function createPlayer (playerName, playerMark) {
 };
 
 const gameController = (() => {
-	// const board = gameBoard.getBoard();
-	// const domHandler = handleDOM(board);
-	// const dialog = document.querySelector("dialog");
-
-
-	// const names = domHandler.getNames()
-
 	const player1 = createPlayer('soham', 'x');
 	const player2 = createPlayer('kratos', 'o');
 	const player = [player1, player2]
@@ -78,22 +71,15 @@ const gameController = (() => {
 	}
 
 	function playGame() {
-		// dialog.showModal();
-		while(!gameBoard.checkWin() && !gameBoard.checkTie()) {
-			let index = parseInt(prompt('Enter a position (0-8):'), 10);
-			gameBoard.addMark(index, activePlayer.playerMark);
-			switchPlayerTurn();
-		}
-
-		  const winner = gameBoard.checkWin();
-  if (winner) {
-    console.log(`Player ${winner} wins!`);
-  } else if (gameBoard.checkTie()) {
-    console.log("It's a tie!");
-  }
-
-  console.log("Final Board:");
-  console.log(gameBoard.getBoard());
+		console.log(activePlayer);
+		switchPlayerTurn();
+		console.log(activePlayer);
+		gameBoard.addMark(1, activePlayer.playerMark);
+		console.log(gameBoard.getBoard(0));
+		//check if program flow is proper manually
+		//after winning what happens do that
+		//after tie ...
+		//then start with dom
 	}
 
 	return {playGame, player1, player2};
@@ -101,68 +87,7 @@ const gameController = (() => {
 })();
 
 gameController.playGame();
-// console.log(gameController.board);
-// console.log(gameController.player1);
-// console.log(gameController.player2);
 
-
-
-// function handleDOM(board) {
-// 	const dialog = document.querySelector("dialog");
-// 	const submitNames = document.querySelector('form');
-// 	const containerDiv = document.querySelector('.container');
-// 	const gameDivs = document.querySelectorAll('.container > div');
-
-// 	let player1Name = '';
-// 	let player2Name = '';
-
-// 	submitNames.addEventListener('submit', event => {
-// 		event.preventDefault();
-// 		player1Name = event.target.player1Name.value;
-// 		player2Name = event.target.player2Name.value;
-// 		dialog.close();
-// 	});
-
-// 	gameDivs.forEach((div) => {
-// 		div.addEventListener('click', () => {
-// 			const index = parseInt(div.getAttribute('data-index'));
-// 			if(board[index] === NULL) {
-// 			}
-// 		})
-// 	})
-
-
-// 	function getNames() {
-// 		return [player1Name, player2Name];
-// 	}
-
-// 	(function displayDivs() {
-// 		for(let i = 0; i < 9; i++) {
-// 			let newDiv = document.createElement('div');
-// 			newDiv.setAttribute("data-index", i);
-// 			containerDiv.appendChild(newDiv);
-// 		}
-// 	})();
-
-// 	function updateDisplay(board) {
-// 		for (let i = 0; i < board.length; i++) {
-// 			if (board[i] != null) { // Check if the board position is not empty
-// 				let reqDiv = document.querySelector(`div[data-index='${i}']`);
-// 				if (reqDiv) {
-// 					reqDiv.textContent = board[i]; // Update the div with the board value
-// 				}
-// 			}
-// 		}
-// 	}
-
-
-// 	return {
-// 		getNames,
-// 		upddateDisplay,
-// 	}
-
-
-// }
 
 
 

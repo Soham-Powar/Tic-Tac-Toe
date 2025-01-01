@@ -10,14 +10,30 @@
 	<link
 		href="https://fonts.googleapis.com/css2?family=Mystery+Quest&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
 		rel="stylesheet">
-	<script src="script.js"></script>
+	<script src="script.js" defer></script>
 	<title>Tic Tac Toe</title>
 </head>
 
 <body>
 	<h2>Tic Tac Toe</h2>
+	<dialog>
+		<h5>Enter Player Names</h5>
+		<form action="#" method="dialog">
+			<div class="player1-name">
+				<label for="player1Name">Player 1:</label>
+				<input type="text" name="player1Name" id="player1Name" required>
+			</div>
+			<div class="player2-name">
+				<label for="player2Name">Player 2:</label>
+				<input type="text" name="player2Name" id="player2Name" required>
+			</div>
+			<div class="start-game">
+				<button type="submit">Start Game!</button>
+			</div>
+		</form>
+	</dialog>
 	<div class="container">
-		<div class="bottom-border right-border"></div>
+		<!-- <div class="bottom-border right-border" data-index></div>
 		<div class="bottom-border right-border"></div>
 		<div class="bottom-border"></div>
 		<div class="bottom-border right-border"></div>
@@ -25,7 +41,7 @@
 		<div class="bottom-border"></div>
 		<div class="right-border"></div>
 		<div class="right-border"></div>
-		<div></div>
+		<div></div> -->
 	</div>
 </body>
 

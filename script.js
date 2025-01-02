@@ -60,6 +60,13 @@ const domHandler = (function () {
 	const dialog = document.querySelector('dialog');
 	const formSubmit = document.querySelector('form');
 	const messageDisplay = document.querySelector('.message');
+	const resetBtn = document.querySelector('.reset-btn');
+
+	resetBtn.addEventListener('click', () => {
+		resetDOM();
+		gameBoard.resetBoard();
+		updateMessage('');
+	});
 
 	formSubmit.addEventListener('submit', (event) => {
 		event.preventDefault();
@@ -69,6 +76,14 @@ const domHandler = (function () {
   		dialog.close();
 		gameController.playGame(player1Name, player2Name);
 	});
+
+	function resetDOM () {
+		const gameDivs = document.querySelectorAll('.container > div');
+		gameDivs.forEach((div) => {
+			div.textContent = '';
+		});
+		gameController.playGame();
+	}
 
 	function attachEventListeners() {
 		const gameDivs = document.querySelectorAll('.container > div');
@@ -102,6 +117,7 @@ const domHandler = (function () {
 		fillContainer,
 		showForm,
 		updateMessage,
+		resetDOM,
 	}
 })();
 
@@ -128,6 +144,7 @@ const gameController = (() => {
 
 			if (gameBoard.checkTie()) {
 				domHandler.updateMessage("It's a tie!");
+				resetDOM();
 				return;
 			}
 
@@ -137,8 +154,10 @@ const gameController = (() => {
 	}
 
 	function playGame(player1Name, player2Name) {
-		player[0] = createPlayer(player1Name, 'x');
-		player[1] = createPlayer(player2Name, 'o');
+		if(activePlayer === null) {
+			player[0] = createPlayer(player1Name, 'x');
+			player[1] = createPlayer(player2Name, 'o');
+		}
 		activePlayer = player[0];
 
 		gameBoard.resetBoard();

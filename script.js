@@ -39,7 +39,9 @@ const gameBoard = (function () {
 	function addMark(index, marker) {
 		if(_board[index] === null) {
 			_board[index] = marker;
+			return true;
 		}
+		return false;
 	};
 
 	return {
@@ -57,6 +59,7 @@ const domHandler = (function () {
 	const container = document.querySelector('.container');
 	const dialog = document.querySelector('dialog');
 	const formSubmit = document.querySelector('form');
+	const messageDisplay = document.querySelector('.message');
 
 	formSubmit.addEventListener('submit', (event) => {
 		event.preventDefault();
@@ -71,8 +74,8 @@ const domHandler = (function () {
 		const gameDivs = document.querySelectorAll('.container > div');
 		gameDivs.forEach((div) => {
 			div.addEventListener('click', () => {
-				const activePlayer = gameController.getActivePlayer();
-				div.textContent = activePlayer.playerMark;
+				const index = parseInt(div.getAttribute('data-index'));
+				gameController.handleTurn(index);
 			});
 		});
 	}
@@ -82,6 +85,7 @@ const domHandler = (function () {
 	}
 
 	function fillContainer () {
+		container.innerHTML = '';
 		for(let i = 0; i < 9; i++) {
 			let newDiv = document.createElement('div');
 			newDiv.setAttribute('data-index', i);
@@ -90,52 +94,62 @@ const domHandler = (function () {
 		attachEventListeners();
 	}
 
+	function updateMessage(message) {
+		messageDisplay.textContent = message;
+	}
+
 	return {
 		fillContainer,
 		showForm,
+		updateMessage,
 	}
 })();
 
 const gameController = (() => {
-	const player = ['', ''];
-	let activePlayer = '';
+	const player = [];
+	let activePlayer = null;
 
 	const switchPlayerTurn = () => {
 		activePlayer = activePlayer === player[0] ? player[1] : player[0];
 	}
 
-	const getActivePlayer = () => {
-		return activePlayer;
+	const getActivePlayer = () => activePlayer;
+
+	function handleTurn(index) {
+		if (gameBoard.addMark(index, activePlayer.playerMark)) {
+			const gameDivs = document.querySelectorAll('.container > div');
+			gameDivs[index].textContent = activePlayer.playerMark;
+
+			const winResult = gameBoard.checkWin();
+			if (winResult) {
+				domHandler.updateMessage(`${activePlayer.playerName} wins!`);
+				return;
+			}
+
+			if (gameBoard.checkTie()) {
+				domHandler.updateMessage("It's a tie!");
+				return;
+			}
+
+			switchPlayerTurn();
+			domHandler.updateMessage(`${activePlayer.playerName}'s turn (${activePlayer.playerMark})`);
+		}
 	}
 
 	function playGame(player1Name, player2Name) {
-		
 		player[0] = createPlayer(player1Name, 'x');
 		player[1] = createPlayer(player2Name, 'o');
-		switchPlayerTurn();
+		activePlayer = player[0];
 
-
+		gameBoard.resetBoard();
 		domHandler.fillContainer();
 
-
-		// gameBoard.addMark(0, activePlayer.playerMark);
-		// // switchPlayerTurn();
-		// gameBoard.addMark(1, activePlayer.playerMark);
-		// // switchPlayerTurn();
-		// gameBoard.addMark(2, activePlayer.playerMark);
-		// // switchPlayerTurn();
-		// console.log(gameBoard.checkWin());
-		// console.log(gameBoard.getBoard());
-		// }
-		//check if program flow is proper manually
-		//after winning what happens ...
-		//after tie ...
-		//then start with dom
 	}
 
 	return {
 		playGame,
 		getActivePlayer,
+		handleTurn,
 	};
 
 })();

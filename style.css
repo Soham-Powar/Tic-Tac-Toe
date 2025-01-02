@@ -74,13 +74,23 @@ h6 {
 /* *************************************************** */
 
 body {
-	background-color: #FEFEFF;
+	background-color: #D8BFD8;
 }
 
 h2 {
 	font-size: 64px;
 	text-align: center;
-	color: #4A6884;
+	color: #4B0082;
+}
+
+h3 {
+	color: #4B0082;
+}
+
+input {
+	background-color: #a66dc760;
+	border-radius: 15px;
+	padding: 2px 7px;
 }
 
 .container {
@@ -92,8 +102,9 @@ h2 {
 
 .container>div {
 	font-size: 64px;
-	border: 2px solid #3a98d4;
-	background-color: #bde9f3;
+	border: 2px solid #4A235A;
+	background: linear-gradient(to bottom right, #FFFFFF, #D7BDE2);
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -102,6 +113,8 @@ h2 {
 
 .container>div:hover {
 	background-color: aquamarine;
+	background: linear-gradient(to bottom right, #FFFFFF, #C39BD3);
+	/* transform: scale(1.05); */
 }
 
 .bottom-border {
@@ -115,10 +128,14 @@ h2 {
 dialog {
 	margin: auto;
 	margin-top: 200px;
+	border: 5px solid #4B0082;
+	border-radius: 10px;
+	background-color: #f4ebfa;
 }
 
 dialog>form {
 	height: 200px;
+	padding: 15px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
@@ -133,4 +150,55 @@ form>div {
 
 form>div>* {
 	flex: 1;
+}
+
+.display {
+	background-color: #E6E6FA;
+	border: 7px solid #4B0082;
+	border-radius: 15px;
+	display: flex;
+	flex-direction: column;
+	width: 500px;
+	margin: auto;
+	padding: 20px;
+	margin-top: 15px;
+}
+
+.display>div {
+	display: flex;
+	font-size: x-large;
+	gap: 50px;
+	justify-content: center;
+}
+
+.score {
+	width: 100px;
+	padding: 5px;
+	font-weight: bold;
+}
+
+.display>div>p {
+	width: 150px;
+	padding: 5px;
+	font-weight: bold;
+}
+
+button {
+	width: 150px;
+	height: 40px;
+	margin: auto;
+	border: 3px solid #4B0082;
+	border-radius: 15px;
+	font-size: large;
+	background-color: #E6E6FA;
+	box-shadow: 2px 2px 2px;
+}
+
+button:hover {
+	color: white;
+	background-color: #4B0082;
+}
+
+.message {
+	padding: 5px;
 }

@@ -151,7 +151,7 @@ const gameController = (() => {
 
 			const winResult = gameBoard.checkWin();
 			if (winResult) {
-				domHandler.updateMessage(`${activePlayer.playerName} wins!`);
+				domHandler.updateMessage(`Yayy! ${activePlayer.playerName} has won.`);
 				return;
 			}
 
@@ -198,6 +198,9 @@ function createPlayer (playerName, playerMark) {
 domHandler.showForm();
 
 //also have to display score
+//once someone wins it should stop taking more marks 
+//and on click it should reset everything
+//or make everything unresponsive only leaving option of reset.
 //Tomorrow make sure that everything is working correctly
 //test for end cases and make sure everything is good
 //remove redundancy if any

@@ -75,9 +75,11 @@ h6 {
 
 body {
 	background-color: #D8BFD8;
+	font-family: Roboto;
 }
 
 h2 {
+	font-family: "Mystery Quest";
 	font-size: 64px;
 	text-align: center;
 	color: #4B0082;
@@ -107,6 +109,7 @@ input {
 	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 	display: flex;
 	justify-content: center;
+	font-family: "Mystery Quest";
 	align-items: center;
 	color: #4A6884;
 }

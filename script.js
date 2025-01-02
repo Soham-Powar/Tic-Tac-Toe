@@ -65,6 +65,8 @@ const domHandler = (function () {
 	const formSubmit = document.querySelector('form');
 	const messageDisplay = document.querySelector('.message');
 	const resetBtn = document.querySelector('.reset-btn');
+	const player1Div =document.querySelector('.player1 > p');
+	const player2Div =document.querySelector('.player2 > p');
 
 	resetBtn.addEventListener('click', () => {
 		resetDOM();
@@ -77,6 +79,8 @@ const domHandler = (function () {
 		event.preventDefault();
 		let player1Name = event.target.player1Name.value;
 		let player2Name = event.target.player2Name.value;
+		player1Div.textContent = `${player1Name} (X):`
+		player2Div.textContent = `${player2Name} (O):`
 		formSubmit.reset();
   		dialog.close();
 		gameController.playGame(player1Name, player2Name);

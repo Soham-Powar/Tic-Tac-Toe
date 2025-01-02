@@ -190,7 +190,8 @@ button {
 	border: 3px solid #4B0082;
 	border-radius: 15px;
 	font-size: large;
-	background-color: #E6E6FA;
+	background-color: #d195f3b4;
+	color: #4B0082;
 	box-shadow: 2px 2px 2px;
 }
 
@@ -201,4 +202,8 @@ button:hover {
 
 .message {
 	padding: 5px;
+}
+
+::backdrop {
+	backdrop-filter: blur(7px);
 }

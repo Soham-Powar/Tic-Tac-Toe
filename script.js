@@ -184,7 +184,10 @@ function createPlayer (playerName, playerMark) {
 
 domHandler.showForm();
 
-// gameController.playGame();
+//Tomorrow make sure that everything is working correctly
+//test for end cases and make sure everything is good
+//remove redundancy if any
+//focus on aesthetics too, make it look better.
 
 
 

@@ -89,6 +89,10 @@ h6 {
 	align-items: center;
 }
 
+.container>div:hover {
+	background-color: aquamarine;
+}
+
 .bottom-border {
 	border-bottom: 2px solid;
 }

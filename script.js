@@ -7,7 +7,6 @@ const gameBoard = (function () {
 
 	const resetBoard = () => {
 		_board.fill(null);
-		// return _board;
 	}
 
 	const winPositions = [
@@ -24,7 +23,10 @@ const gameBoard = (function () {
 	function checkWin() {
 		for (const [a, b, c] of winPositions) {
 			if (_board[a] && _board[a] === _board[b] && _board[b] === _board[c]) {
-				return _board[a];
+				return {
+					winMark: _board[a],
+					winPositions: [a,b,c],
+				}
 			}
 		}
 		return null;
@@ -50,6 +52,94 @@ const gameBoard = (function () {
 
 })();
 
+
+const domHandler = (function () {
+	const container = document.querySelector('.container');
+	const dialog = document.querySelector('dialog');
+	const formSubmit = document.querySelector('form');
+
+	formSubmit.addEventListener('submit', (event) => {
+		event.preventDefault();
+		let player1Name = event.target.player1Name.value;
+		let player2Name = event.target.player2Name.value;
+		formSubmit.reset();
+  		dialog.close();
+		gameController.playGame(player1Name, player2Name);
+	});
+
+	function attachEventListeners() {
+		const gameDivs = document.querySelectorAll('.container > div');
+		gameDivs.forEach((div) => {
+			div.addEventListener('click', () => {
+				const activePlayer = gameController.getActivePlayer();
+				div.textContent = activePlayer.playerMark;
+			});
+		});
+	}
+
+	function showForm () {
+		dialog.showModal();
+	}
+
+	function fillContainer () {
+		for(let i = 0; i < 9; i++) {
+			let newDiv = document.createElement('div');
+			newDiv.setAttribute('data-index', i);
+			container.appendChild(newDiv);
+		}
+		attachEventListeners();
+	}
+
+	return {
+		fillContainer,
+		showForm,
+	}
+})();
+
+const gameController = (() => {
+	const player = ['', ''];
+	let activePlayer = '';
+
+	const switchPlayerTurn = () => {
+		activePlayer = activePlayer === player[0] ? player[1] : player[0];
+	}
+
+	const getActivePlayer = () => {
+		return activePlayer;
+	}
+
+	function playGame(player1Name, player2Name) {
+		
+		player[0] = createPlayer(player1Name, 'x');
+		player[1] = createPlayer(player2Name, 'o');
+		switchPlayerTurn();
+
+
+		domHandler.fillContainer();
+
+
+		// gameBoard.addMark(0, activePlayer.playerMark);
+		// // switchPlayerTurn();
+		// gameBoard.addMark(1, activePlayer.playerMark);
+		// // switchPlayerTurn();
+		// gameBoard.addMark(2, activePlayer.playerMark);
+		// // switchPlayerTurn();
+		// console.log(gameBoard.checkWin());
+		// console.log(gameBoard.getBoard());
+		// }
+		//check if program flow is proper manually
+		//after winning what happens ...
+		//after tie ...
+		//then start with dom
+	}
+
+	return {
+		playGame,
+		getActivePlayer,
+	};
+
+})();
+
 function createPlayer (playerName, playerMark) {
 	return {
 		playerName,
@@ -59,34 +149,9 @@ function createPlayer (playerName, playerMark) {
 
 };
 
-const gameController = (() => {
-	const player1 = createPlayer('soham', 'x');
-	const player2 = createPlayer('kratos', 'o');
-	const player = [player1, player2]
+domHandler.showForm();
 
-	let activePlayer = player[0];
-
-	const switchPlayerTurn = () => {
-		activePlayer = activePlayer === player[0] ? player[1] : player[0];
-	}
-
-	function playGame() {
-		console.log(activePlayer);
-		switchPlayerTurn();
-		console.log(activePlayer);
-		gameBoard.addMark(1, activePlayer.playerMark);
-		console.log(gameBoard.getBoard(0));
-		//check if program flow is proper manually
-		//after winning what happens do that
-		//after tie ...
-		//then start with dom
-	}
-
-	return {playGame, player1, player2};
-
-})();
-
-gameController.playGame();
+// gameController.playGame();
 
 
 

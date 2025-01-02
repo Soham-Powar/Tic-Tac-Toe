@@ -1,4 +1,5 @@
-
+//This module contains functions applicable on board. Board is an array which will hold the x/o marks from the game.
+//except _board every function is kept accessible.
 const gameBoard = (function () {
 
 	let _board = Array(9).fill(null);
@@ -20,6 +21,7 @@ const gameBoard = (function () {
     [2, 4, 6],
 	];
 
+	//check if the elements present at the possible winning positions of the array are same. If same => somebody has won!
 	function checkWin() {
 		for (const [a, b, c] of winPositions) {
 			if (_board[a] && _board[a] === _board[b] && _board[b] === _board[c]) {
@@ -32,6 +34,7 @@ const gameBoard = (function () {
 		return null;
 	}
 
+	//if the array contains no null element(all elements are either x/o) => Its a tie!
 	function checkTie() {
 		return !_board.some(elem => elem === null);
 	}
@@ -55,6 +58,7 @@ const gameBoard = (function () {
 })();
 
 
+//Module responsible to handle DOM, both input and output.
 const domHandler = (function () {
 	const container = document.querySelector('.container');
 	const dialog = document.querySelector('dialog');
@@ -68,6 +72,7 @@ const domHandler = (function () {
 		updateMessage('');
 	});
 
+	//playGame starts when and if this event is fired. i.e - i.f.f form with playerNames is submitted.
 	formSubmit.addEventListener('submit', (event) => {
 		event.preventDefault();
 		let player1Name = event.target.player1Name.value;
@@ -85,6 +90,8 @@ const domHandler = (function () {
 		gameController.playGame();
 	}
 
+	//It must happen after the container is filled with divs or the selector '.container>div' wont return anything as nothing is in dom.
+	//so the event listener is enclosed inside of an function.
 	function attachEventListeners() {
 		const gameDivs = document.querySelectorAll('.container > div');
 		gameDivs.forEach((div) => {
@@ -95,10 +102,12 @@ const domHandler = (function () {
 		});
 	}
 
+	//This function is called first, only then form is displayed and can be submitted after filling names(which fires playGame).
 	function showForm () {
 		dialog.showModal();
 	}
 
+	//Add the cells of tic-tac-toe.
 	function fillContainer () {
 		container.innerHTML = '';
 		for(let i = 0; i < 9; i++) {
@@ -162,7 +171,6 @@ const gameController = (() => {
 
 		gameBoard.resetBoard();
 		domHandler.fillContainer();
-
 	}
 
 	return {
@@ -173,6 +181,7 @@ const gameController = (() => {
 
 })();
 
+//Create player object
 function createPlayer (playerName, playerMark) {
 	return {
 		playerName,
@@ -184,6 +193,7 @@ function createPlayer (playerName, playerMark) {
 
 domHandler.showForm();
 
+//also have to display score
 //Tomorrow make sure that everything is working correctly
 //test for end cases and make sure everything is good
 //remove redundancy if any

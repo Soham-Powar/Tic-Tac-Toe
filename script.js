@@ -65,8 +65,10 @@ const domHandler = (function () {
 	const formSubmit = document.querySelector('form');
 	const messageDisplay = document.querySelector('.message');
 	const resetBtn = document.querySelector('.reset-btn');
-	const player1Div =document.querySelector('.player1 > p');
-	const player2Div =document.querySelector('.player2 > p');
+	const player1Div = document.querySelector('.player1 > p');
+	const player2Div = document.querySelector('.player2 > p');
+	const player1Score = document.querySelector('.player1 > .score');
+	const player2Score = document.querySelector('.player2 > .score');
 
 	resetBtn.addEventListener('click', () => {
 		resetDOM();
@@ -92,6 +94,15 @@ const domHandler = (function () {
 			div.textContent = '';
 		});
 		gameController.playGame();
+	}
+
+	function displayUpdatedScore (activePlayer) {
+		if(activePlayer.playerMark === "x") {
+			player1Score.textContent = activePlayer.score;
+		}
+		else {
+			player2Score.textContent = activePlayer.score;
+		}
 	}
 
 	//It must happen after the container is filled with divs or the selector '.container>div' wont return anything as nothing is in dom.
@@ -124,6 +135,7 @@ const domHandler = (function () {
 
 	function updateMessage(message) {
 		messageDisplay.textContent = message;
+		console.log(message);
 	}
 
 	return {
@@ -131,6 +143,7 @@ const domHandler = (function () {
 		showForm,
 		updateMessage,
 		resetDOM,
+		displayUpdatedScore,
 	}
 })();
 
@@ -149,15 +162,24 @@ const gameController = (() => {
 			const gameDivs = document.querySelectorAll('.container > div');
 			gameDivs[index].textContent = activePlayer.playerMark;
 
-			const winResult = gameBoard.checkWin();
-			if (winResult) {
+			const winner = gameBoard.checkWin();
+			if (winner) {
+				activePlayer.score++;
+				domHandler.displayUpdatedScore(activePlayer);
 				domHandler.updateMessage(`Yayy! ${activePlayer.playerName} has won.`);
+			    setTimeout(() => {
+       				 domHandler.resetDOM();
+       				 gameBoard.resetBoard();
+  				}, 1000); // 2 seconds delay
 				return;
 			}
 
 			if (gameBoard.checkTie()) {
 				domHandler.updateMessage("It's a tie!");
-				resetDOM();
+			    setTimeout(() => {
+       				 domHandler.resetDOM();
+       				 gameBoard.resetBoard();
+  				}, 2000); // 2 seconds delay
 				return;
 			}
 
@@ -173,6 +195,7 @@ const gameController = (() => {
 		}
 		activePlayer = player[0];
 
+		domHandler.updateMessage(`${activePlayer.playerName}'s turn (${activePlayer.playerMark})`);
 		gameBoard.resetBoard();
 		domHandler.fillContainer();
 	}
@@ -196,15 +219,6 @@ function createPlayer (playerName, playerMark) {
 };
 
 domHandler.showForm();
-
-//also have to display score
-//once someone wins it should stop taking more marks 
-//and on click it should reset everything
-//or make everything unresponsive only leaving option of reset.
-//Tomorrow make sure that everything is working correctly
-//test for end cases and make sure everything is good
-//remove redundancy if any
-//focus on aesthetics too, make it look better.
 
 
 
